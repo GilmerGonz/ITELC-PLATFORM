@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SmartHeader from "@/components/SmartHeader";
-import { Trophy, Star, Target, TrendingUp, Download } from "lucide-react";
+// Cambiamos Download por Send
+import { Trophy, Star, Target, TrendingUp, Send } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+// Mantenemos la lógica de 60 puntos (5 pts x 12 semanas = 60)
 const POINTS_PER_WEEK = 5;
 const TOTAL_WEEKS = 12;
 const MAX_TOTAL_POINTS = POINTS_PER_WEEK * TOTAL_WEEKS;
@@ -119,9 +121,8 @@ const Progress: React.FC = () => {
               </div>
             </div>
 
-            {/* Tarjeta Negra con BORDE ACTUALIZADO */}
+            {/* Tarjeta Negra de Solicitud */}
             <div className="relative group flex-grow">
-              {/* Este es el nuevo borde con gradiente para la tarjeta negra */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-[2rem] opacity-20 group-hover:opacity-100 transition duration-700 blur-sm"></div>
               
               <div className="relative h-full rounded-[2rem] bg-slate-900 p-8 shadow-2xl text-white flex flex-col min-h-[300px] overflow-hidden">
@@ -130,21 +131,21 @@ const Progress: React.FC = () => {
                 <div className="relative z-10 flex-grow">
                   <Star size={32} className={`mb-4 ${percentage >= 80 ? "text-yellow-400 fill-yellow-400 animate-bounce" : "text-white/20"}`} />
                   <p className="text-xl font-bold mb-2">
-                    {percentage >= 80 ? "¡Certificado Listo!" : "Estado del Nivel"}
+                    {percentage >= 80 ? "¡Nivel Superado!" : "Estado del Nivel"}
                   </p>
                   <p className="text-xs text-slate-400 leading-relaxed mb-6">
                     {percentage >= 80 
-                    ? "Felicidades, has completado el nivel. Tu certificado está disponible para descarga inmediata." 
-                    : "Llega al 80% del total del curso para habilitar la descarga oficial."}
+                    ? "Has alcanzado el puntaje necesario. Ya puedes solicitar tu certificado oficial de ITELC." 
+                    : "Llega al 80% del total del curso (48 pts) para habilitar la solicitud oficial."}
                   </p>
                 </div>
                 
                 <Button 
-                  onClick={() => console.log("Descargando...")}
+                  onClick={() => console.log("Solicitando certificado...")}
                   className="mt-auto relative z-10 w-full py-6 px-2 rounded-2xl font-black text-[10px] uppercase tracking-normal flex items-center justify-center gap-2 transition-all duration-300 active:scale-95 shadow-xl bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
                 >
-                  <Download size={14} className={`${percentage >= 80 ? "animate-bounce" : ""} flex-shrink-0`} />
-                  <span className="whitespace-nowrap">Descargar Certificado</span>
+                  <Send size={14} className={`${percentage >= 80 ? "animate-pulse" : ""} flex-shrink-0`} />
+                  <span className="whitespace-nowrap">SOLICITAR CERTIFICADO</span>
                 </Button>
               </div>
             </div>
